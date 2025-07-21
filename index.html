@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jetpack Compose Миграция</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 2rem;
+        }
+        h1 {
+            text-align: center;
+            color: #222;
+        }
+        section {
+            margin-bottom: 3rem;
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h2 {
+            color: #444;
+        }
+        h3 {
+            margin-top: 1rem;
+            color: #666;
+        }
+        video, img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+        .media {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .media > * {
+            flex: 1 1 45%;
+        }
+        .description {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<h1>Jetpack Compose Миграция: Демонстрация улучшений</h1>
+
+<section>
+    <h2>Главный контейнер</h2>
+    <h3>1. Асинхронная загрузка с адаптивным скелетом</h3>
+    <p class="description">Загрузка блоков главного экрана реализована независимо, с fade-анимацией и адаптацией под разные состояния блока партнеров.</p>
+    <div class="media">
+        <video src="root_loading_before.mov" controls></video>
+        <video src="root_loading_after.mov" controls></video>
+    </div>
+
+    <h3>2. Кастомный pull-to-refresh индикатор</h3>
+    <div class="media">
+        <video src="root_pull_before.mov" controls></video>
+        <video src="root_pull_after.mov" controls></video>
+    </div>
+
+    <h3>3. Обрезка сторис с учетом скруглений</h3>
+    <div class="media">
+        <video src="root_clip_before.mov" controls></video>
+        <video src="root_clip_after.mov" controls></video>
+    </div>
+
+    <h3>4. Сохранение состояния при навигации</h3>
+    <div class="media">
+        <video src="root_navigation_before.mov" controls></video>
+        <video src="root_navigation_after.mov" controls></video>
+    </div>
+</section>
+
+<section>
+    <h2>Тулбар</h2>
+    <h3>1. Ripple эффект при нажатии</h3>
+    <div class="media">
+        <video src="toolbar_ripple_before.mov" controls></video>
+        <video src="toolbar_ripple_after.mov" controls></video>
+    </div>
+
+    <h3>2. Анимация badge-индикатора уведомлений</h3>
+    <video src="toolbar_badge.mov" controls></video>
+</section>
+
+<section>
+    <h2>Баланс</h2>
+    <h3>1. Ripple на кнопке "Перевести"</h3>
+    <video src="balance_withdraw_button.mov" controls></video>
+
+    <h3>2. Анимированный градиент на "Пополнить"</h3>
+    <video src="refill_gradient.mov" controls></video>
+
+    <h3>3. Тактильная отдача (демонстрации нет)</h3>
+
+    <h3>4. Parallax эффект при скролле</h3>
+    <div class="media">
+        <video src="balance_scroll_before.mov" controls></video>
+        <video src="balance_scroll_after.mov" controls></video>
+    </div>
+</section>
+
+<section>
+    <h2>Stories</h2>
+    <h3>1. Кэширование сторисов</h3>
+    <div class="media">
+        <video src="stories_before.mov" controls></video>
+        <video src="stories_aftermov" controls></video>
+    </div>
+</section>
+
+<section>
+    <h2>Партнеры</h2>
+    <h3>1. Badge-ленточки</h3>
+    <img src="partners_green_badge.png" alt="Badge">
+
+    <h3>2. Ripple эффект</h3>
+    <div class="media">
+        <video src="partners_ripple_before.mov" controls></video>
+        <video src="partners_ripple_after.mov" controls></video>
+    </div>
+
+    <h3>3. Адаптивная ширина карточек</h3>
+    <div class="media">
+        <img src="partners_row_full.png" alt="Full">
+        <img src="partners_row_compact.png" alt="Compact">
+    </div>
+
+    <h3>4. Snap scroll анимация</h3>
+    <div class="media">
+        <video src="partners_scroll_before.mov" controls></video>
+        <video src="partners_scroll_after.mov" controls></video>
+    </div>
+
+    <h3>5. Анимация warning индикатора</h3>
+    <video src="partners_badge.mov" controls></video>
+</section>
+
+<section>
+    <h2>Платежи</h2>
+    <p class="description">Теперь отображаются категории, а не отдельные платежи. При нажатии происходит переход к экрану с автоскроллом.</p>
+    <h3>1. Ripple нажатия</h3>
+    <div class="media">
+        <video src="payment_ripple_before.mov" controls></video>
+        <video src="payment_ripple_after.mov" controls></video>
+    </div>
+
+    <h3>2. Snap scroll</h3>
+    <div class="media">
+        <video src="payments_scroll_before.mov" controls></video>
+        <video src="payments_scroll_after.mov" controls></video>
+    </div>
+
+    <h3>3. Открытие сканера QR</h3>
+    <video src="payments_qr_open.mov" controls></video>
+</section>
+
+<section>
+    <h2>Кешбэк</h2>
+    <h3>1. Компактные карточки</h3>
+    <div class="media">
+        <img src="cashback_before.png" alt="До">
+        <img src="cashback_after.png" alt="После">
+    </div>
+
+    <h3>2. Ripple анимация</h3>
+    <div class="media">
+        <video src="cashback_ripple_before.mov" controls></video>
+        <video src="cashback_ripple_after.mov" controls></video>
+    </div>
+
+    <h3>3. Pull to refresh при нажатии на бонусы</h3>
+    <div class="media">
+        <video src="cashback_loading_before.mov" controls></video>
+        <video src="cashback_loading_after.mov" controls></video>
+    </div>
+</section>
+
+<section>
+    <h2>Экран причин блокировки</h2>
+    <h3>1. Индикация нажатия на ссылку</h3>
+    <div class="media">
+        <video src="reasons_tap_before.mov" controls></video>
+        <video src="reasons_tap_after.mov" controls></video>
+    </div>
+
+    <h3>2. Таймер cyberity</h3>
+    <div class="media">
+        <video src="reasons_cyberity_before.mov" controls></video>
+        <video src="reasons_cyberity_after.mov" controls></video>
+    </div>
+</section>
+</body>
+</html>
