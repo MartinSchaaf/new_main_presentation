@@ -30,7 +30,8 @@
             color: #666;
         }
         video, img {
-            max-width: 100%;
+            width: 100%;
+            height: auto;
             border-radius: 8px;
             margin: 0.5rem 0;
         }
@@ -40,7 +41,16 @@
             gap: 1rem;
         }
         .media > * {
-            flex: 1 1 45%;
+            flex: 1 1 0;
+            min-width: 0;
+        }
+        .media > * {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+        .media.fixed-height video:first-child,
+        .media.fixed-height video:nth-child(2) {
+            height: 500px;
         }
         .description {
             margin-bottom: 1rem;
@@ -51,150 +61,168 @@
 <h1>Jetpack Compose Миграция: Демонстрация улучшений</h1>
 
 <section>
-    <h2>Главный контейнер</h2>
-    <h3>1. Асинхронная загрузка с адаптивным скелетом</h3>
-    <p class="description">Загрузка блоков главного экрана реализована независимо, с fade-анимацией и адаптацией под разные состояния блока партнеров.</p>
-    <div class="media">
-        <video src="root_loading_before.mov" controls></video>
-        <video src="root_loading_after.mov" controls></video>
+    <h2>Блок: Главный контейнер</h2>
+
+    <h3>1. Реализована загрузка блоков главного экрана независимо друг от друга со скелетной анимацией и плавным переходом через fade из состояния загрузки к контенту. </h3>
+    <p>Для блока партнеров анимация является адаптивной из-за нескольких существующих состояний этого блока (с избранными платежами / список всех партнеров / с плашкой "Все партнеры" и т.д.) - запоминаем последнее состояние блока партнеров и на его основе в следующий раз показываем соответсвующий скелет для минимизации вероятности скачков UI из-за разницы по высоте скелета и показанного после контента)</p>
+    <div class="media fixed-height" style="height: 500px;">
+        <video src="loading_old.webm" controls></video>
+        <video src="loading_new.webm" controls></video>
     </div>
 
-    <h3>2. Кастомный pull-to-refresh индикатор</h3>
+    <h3>2. Кастомный индикатор pull to refresh на основе компонента spinner из дизайн системы</h3>
     <div class="media">
-        <video src="root_pull_before.mov" controls></video>
-        <video src="root_pull_after.mov" controls></video>
+        <video src="pull_old.mov" controls></video>
+        <video src="pull_new.mov" controls></video>
     </div>
 
-    <h3>3. Обрезка сторис с учетом скруглений</h3>
+    <h3>3. При горизонтальном скролле контент (обычно сторисы) обрезается с учетом скруглений основной карточки</h3>
     <div class="media">
-        <video src="root_clip_before.mov" controls></video>
-        <video src="root_clip_after.mov" controls></video>
+        <video src="stories_scroll_old.mov" controls></video>
+        <video src="stories_scroll_new.mov" controls></video>
     </div>
 
-    <h3>4. Сохранение состояния при навигации</h3>
-    <div class="media">
-        <video src="root_navigation_before.mov" controls></video>
-        <video src="root_navigation_after.mov" controls></video>
-    </div>
-</section>
-
-<section>
-    <h2>Тулбар</h2>
-    <h3>1. Ripple эффект при нажатии </h3>
-    <div class="media">
-        <video src="toolbar_ripple_before.mov" controls></video>
-        <video src="toolbar_ripple_after.mov" controls></video>
-    </div>
-
-    <h3>2. Анимация badge-индикатора уведомлений</h3>
-    <video src="toolbar_badge.mov" controls></video>
-</section>
-
-<section>
-    <h2>Баланс</h2>
-    <h3>1. Ripple на кнопке "Перевести"</h3>
-    <video src="balance_withdraw_button.mov" controls></video>
-
-    <h3>2. Анимированный градиент на "Пополнить"</h3>
-    <video src="refill_gradient.mov" controls></video>
-
-    <h3>3. Тактильная отдача (демонстрации нет)</h3>
-
-    <h3>4. Parallax эффект при скролле</h3>
-    <div class="media">
-        <video src="balance_scroll_before.mov" controls></video>
-        <video src="balance_scroll_after.mov" controls></video>
+    <h3>4. Сохранение состояния экрана при навигации</h3>
+    <div class="media fixed-height">
+        <video src="root_state_old.webm" controls></video>
+        <video src="root_state_new.webm" controls></video>
     </div>
 </section>
 
 <section>
-    <h2>Stories</h2>
-    <h3>1. Кэширование сторисов</h3>
+    <h2>Блок: Тулбар</h2>
+
+    <h3>1. Добавлен ripple эффект при нажатии на элементы тулбара</h3>
     <div class="media">
-        <video src="stories_before.mov" controls></video>
-        <video src="stories_aftermov" controls></video>
+        <video src="toolbar_ripple_old.mov" controls></video>
+        <video src="toolbar_ripple_new.mov" controls></video>
+    </div>
+
+    <h3>2. Добавлена анимация badge-индикатора при наличии новых уведомлений (проигрывается 3 раза после открытия экрана)</h3>
+    <video src="animated_toolbar_badge.mov" controls></video>
+</section>
+
+<section>
+    <h2>Блок: Баланс</h2>
+
+    <h3>1. Добавлена более выразительная ripple анимация при нажатии на кнопку "Перевести"</h3>
+
+    <div class="media">
+        <video src="refill_button_old.mov" controls></video>
+        <video src="refill_button_new.mov" controls></video>
+    </div>
+
+    <h3>2. Добавлен анимированный градиент на кнопку "Пополнить" (показывается для только что идентифицированного пользователя)</h3>
+    <video src="balance_gradient.mov" controls></video>
+
+    <h3>3. Добавлена тактильная отдача при нажатии на кнопки</h3>
+
+    <h3>4. Зеленый фон скроллится с parallax эффектом (в 4 раза медленнее фактического скролла относительно карточки, баланс и кнопки - в 2 раза медленнее)</h3>
+    <div class="media">
+        <video src="parallax_old.mov" controls></video>
+        <video src="parallax_new.mov" controls></video>
     </div>
 </section>
 
 <section>
-    <h2>Партнеры</h2>
-    <h3>1. Badge-ленточки</h3>
+    <h2>Блок: Stories</h2>
+
+    <h3>1. Добавлено кэширование сторисов - при переходе на другой экран и возвращении на главную сторисы не пересоздаются со скачком всего контента по вертикали</h3>
+    <div class="media fixed-height">
+        <video src="stories_state_old.webm" controls></video>
+        <video src="stories_state_new.webm" controls></video>
+    </div>
+</section>
+
+<section>
+    <h2>Блок: Партнеры</h2>
+
+    <h3>1. Отображение badge (зеленых ленточек)</h3>
     <img src="partners_green_badge.png" alt="Badge">
 
-    <h3>2. Ripple эффект</h3>
-    <div class="media">
-        <video src="partners_ripple_before.mov" controls></video>
-        <video src="partners_ripple_after.mov" controls></video>
+    <h3>2. Ripple анимация нажатия на элементы</h3>
+    <div class="media fixed-height">
+        <video src="partners_ripple_old.webm" controls></video>
+        <video src="partners_ripple_new.webm" controls></video>
     </div>
 
-    <h3>3. Адаптивная ширина карточек</h3>
+    <h3>3. Адаптивная ширина избранных платежей (если их не больше двух - карточки платежа становятся шире, иначе отображаются более компактно)</h3>
     <div class="media">
-        <img src="partners_row_full.png" alt="Full">
-        <img src="partners_row_compact.png" alt="Compact">
+        <img src="partners_full.png" alt="Full">
+        <img src="partners_compact.png" alt="Compact">
     </div>
 
-    <h3>4. Snap scroll анимация</h3>
+    <h3>4. Snap анимация пост скролла избранных платежей</h3>
     <div class="media">
-        <video src="partners_scroll_before.mov" controls></video>
-        <video src="partners_scroll_after.mov" controls></video>
+        <video src="partners_snap_old.mov" controls></video>
+        <video src="partners_snap_new.mov" controls></video>
     </div>
 
-    <h3>5. Анимация warning индикатора</h3>
-    <video src="partners_badge.mov" controls></video>
+    <h3>5. Анимация warning индикатора при наличии букмекеров, требующих внимание</h3>
+    <video src="partners_badge_ripple.mov" controls></video>
 </section>
 
 <section>
-    <h2>Платежи</h2>
-    <p class="description">Теперь отображаются категории, а не отдельные платежи. При нажатии происходит переход к экрану с автоскроллом.</p>
-    <h3>1. Ripple нажатия</h3>
+    <h2>Блок: Платежи</h2>
+
+    <p>В блоке с другими платежами теперь отображаются категории, а не сами платежи. При клике на категорию происходит переход к экрану всех платежей с автоскроллом к выбранной категории.</p>
     <div class="media">
-        <video src="payment_ripple_before.mov" controls></video>
-        <video src="payment_ripple_after.mov" controls></video>
+        <img src="payments_old.png" alt="old">
+        <img src="payments_new.png" alt="new">
     </div>
 
-    <h3>2. Snap scroll</h3>
+    <h3>1. Ripple анимация нажатия на карточку категории</h3>
     <div class="media">
-        <video src="payments_scroll_before.mov" controls></video>
-        <video src="payments_scroll_after.mov" controls></video>
+        <video src="payments_ripple_old.mov" controls></video>
+        <video src="payments_ripple_new.mov" controls></video>
     </div>
 
-    <h3>3. Открытие сканера QR</h3>
-    <video src="payments_qr_open.mov" controls></video>
-</section>
-
-<section>
-    <h2>Кешбэк</h2>
-    <h3>1. Компактные карточки</h3>
+    <h3>2. Snap анимация постскролла</h3>
     <div class="media">
-        <img src="cashback_before.png" alt="До">
-        <img src="cashback_after.png" alt="После">
+        <video src="payments_scroll_old.mov" controls></video>
+        <video src="payments_scroll_new.mov" controls></video>
     </div>
 
-    <h3>2. Ripple анимация</h3>
-    <div class="media">
-        <video src="cashback_ripple_before.mov" controls></video>
-        <video src="cashback_ripple_after.mov" controls></video>
-    </div>
-
-    <h3>3. Pull to refresh при нажатии на бонусы</h3>
-    <div class="media">
-        <video src="cashback_loading_before.mov" controls></video>
-        <video src="cashback_loading_after.mov" controls></video>
+    <h3>3. Открытие экрана сканирования qr по тапу на категорию qr</h3>
+    <div class="media fixed-height">
+        <video src="payments_qr.webm" controls></video>
     </div>
 </section>
 
 <section>
-    <h2>Экран причин блокировки</h2>
-    <h3>1. Индикация нажатия на ссылку</h3>
+    <h2>Блок: Кешбэк</h2>
+
+    <h3>1. Карточки выглядят более компактно по ширине</h3>
     <div class="media">
-        <video src="reasons_tap_before.mov" controls></video>
-        <video src="reasons_tap_after.mov" controls></video>
+        <img src="cashback_old.png" alt="До">
+        <img src="cashback_new.png" alt="После">
     </div>
 
-    <h3>2. Таймер cyberity</h3>
+    <h3>2. Добавлена ripple анимация нажатия на карточку</h3>
     <div class="media">
-        <video src="reasons_cyberity_before.mov" controls></video>
-        <video src="reasons_cyberity_after.mov" controls></video>
+        <video src="cashback_ripple_old.mov" controls></video>
+        <video src="cashback_ripple_new.mov" controls></video>
+    </div>
+
+    <h3>3. При нажатии на бонусы от партнеров отображается pull to refresh индикация загрузки для проверки наличия выпущенной карты</h3>
+    <div class="media fixed-height">
+        <video src="cashback_loading_old.webm" controls></video>
+        <video src="cashback_loading_new.webm" controls></video>
+    </div>
+</section>
+
+<section>
+    <h2>Блок: Экран с причинами блокировок</h2>
+    <h3>1. Добавлена индикация нажатия на ссылку</h3>
+    <div class="media fixed-height">
+        <video src="block_link_old.mov" controls></video>
+        <video src="block_link_new.mov" controls></video>
+    </div>
+
+    <h3>2. Таймер для верификации в cyberity теперь не статичный, а отсчитывает время и меняет доступность кнопки</h3>
+    <div class="media fixed-height">
+        <video src="block_cyberity_old.webm" controls></video>
+        <video src="block_cyberity_new.webm" controls></video>
     </div>
 </section>
 </body>
